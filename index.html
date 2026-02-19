@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Offline OSM Navigator</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <style>
+      html,
+      body,
+      #app {
+        margin: 0;
+        height: 100%;
+        font-family: Arial, sans-serif;
+      }
+      #toolbar {
+        position: absolute;
+        z-index: 1000;
+        top: 8px;
+        left: 8px;
+        background: rgba(255,255,255,0.95);
+        border-radius: 8px;
+        padding: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        max-width: 360px;
+      }
+      #toolbar button { padding: 6px 8px; }
+      #map { height: 100%; }
+      #status { font-size: 12px; width: 100%; }
+      .active { background: #1f6feb; color: #fff; }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="toolbar">
+        <button id="btn-point">Modo ponto</button>
+        <button id="btn-route">Modo rota</button>
+        <button id="btn-finish-route">Finalizar rota</button>
+        <button id="btn-download">Baixar região visível</button>
+        <button id="btn-locate">Minha localização</button>
+        <button id="btn-export-gpx">Exportar GPX</button>
+        <button id="btn-export-kml">Exportar KML</button>
+        <label>
+          Importar GPX/KML
+          <input id="file-import" type="file" accept=".gpx,.kml" />
+        </label>
+        <div id="status">Iniciando...</div>
+      </div>
+      <div id="map"></div>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

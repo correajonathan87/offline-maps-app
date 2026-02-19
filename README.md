@@ -26,6 +26,7 @@ src/
     mapEditor.js               # Criação de POIs e rotas desenhadas
   persistence/
     storage.js                 # Persistência local offline
+    syncFolder.js              # Sync por pasta compartilhada (JSON)
   io/
     fileInterop.js             # Importação/exportação GPX e KML
 sw.js                          # Service Worker para app shell offline
@@ -45,6 +46,7 @@ index.html                     # UI base e toolbar
 - ✅ Persistência local de POIs, rotas e edições do mapa (`mapEdits`).
 - ✅ Importar e exportar GPX/KML.
 - ✅ Sobreposição de todas as rotas e pontos salvos no mapa.
+- ✅ Salvar/carregar snapshot em pasta local para sync com outros apps compatíveis.
 
 ## Como rodar
 
@@ -77,6 +79,7 @@ Abrir: `http://localhost:4173`
 
 ### 4) Persistência offline
 - `src/persistence/storage.js` salva/carrega estado da aplicação via `localStorage`.
+- `src/persistence/syncFolder.js` permite escolher uma pasta e escrever/ler `offline-osm-sync.json` para sincronização entre apps que compartilham arquivos locais.
 - `src/map/offlineTileLayer.js` guarda tiles em `Cache Storage`.
 - `sw.js` cacheia o app shell para inicialização offline da interface.
 

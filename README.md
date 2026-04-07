@@ -20,6 +20,7 @@ src/
   map/
     mapRenderer.js             # Renderização do mapa e overlays
     offlineTileLayer.js        # Cache offline de tiles + download por região
+    searchService.js           # Busca por endereço (nome ou coordenadas)
   gps/
     locationService.js         # Localização do usuário (GPS)
   editor/
@@ -39,6 +40,7 @@ index.html                     # UI base e toolbar
 - ✅ Mapa inicia enquadrado no território do Brasil.
 - ✅ Download de região visível (zoom 12 a 15) para uso offline.
 - ✅ Exibição da posição atual via GPS.
+- ✅ Janela de busca para endereço por nome ou coordenadas (lat,lng).
 - ✅ Botão para centralizar rapidamente na localização atual do usuário.
 - ✅ Modo de criação de ponto (POI) manual.
 - ✅ Modo de criação de rota por cliques no mapa + salvar rota.
@@ -62,6 +64,7 @@ Abrir: `http://localhost:4173`
 
 ### 1) Renderização do mapa
 - `src/map/mapRenderer.js`: inicializa o Leaflet, adiciona camada de tiles offline-first, cria layers de POIs e rotas.
+- `src/map/searchService.js`: resolve busca por coordenadas digitadas (`lat,lng`) e por nome usando Nominatim (OSM).
 - `renderPois` e `renderRoutes`: redesenham o estado persistido no mapa sempre que algo muda.
 
 ### 2) GPS / localização

@@ -33,6 +33,8 @@
         max-width: 360px;
       }
       #toolbar button { padding: 6px 8px; }
+      #search-box { display: flex; gap: 6px; width: 100%; }
+      #search-input { flex: 1; padding: 6px; }
       #map { height: 100%; }
       #status { font-size: 12px; width: 100%; }
       .active { background: #1f6feb; color: #fff; }
@@ -47,6 +49,10 @@
         <button id="btn-download">Baixar região visível</button>
         <button id="btn-locate">Minha localização</button>
         <button id="btn-export-gpx">Exportar GPX</button>
+        <div id="search-box">
+          <input id="search-input" type="text" placeholder="Buscar endereço ou lat,lng" />
+          <button id="btn-search">Buscar</button>
+        </div>
         <button id="btn-export-kml">Exportar KML</button>
         <label>
           Importar GPX/KML

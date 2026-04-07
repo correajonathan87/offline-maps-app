@@ -1,5 +1,6 @@
 import { initMap, renderPois, renderRoutes } from './map/mapRenderer.js';
 import { downloadVisibleRegion } from './map/offlineTileLayer.js';
+import { searchAddress } from './map/searchService.js';
 import { startGpsTracking } from './gps/locationService.js';
 import { setupMapEditor } from './editor/mapEditor.js';
 import { loadState, saveState } from './persistence/storage.js';
@@ -10,6 +11,7 @@ const statusEl = document.querySelector('#status');
 const setStatus = (msg) => (statusEl.textContent = msg);
 
 const { map, poiLayer, routeLayer } = initMap(setStatus);
+let searchMarker;
 
 function refresh() {
   renderPois(poiLayer, state.pois);
@@ -49,6 +51,37 @@ document.getElementById('btn-locate').addEventListener('click', () => {
 document.getElementById('btn-download').addEventListener('click', async () => {
   setStatus('Baixando tiles da região visível...');
   await downloadVisibleRegion(map, 12, 15, setStatus);
+});
+
+async function runSearch() {
+  const input = document.getElementById('search-input');
+  const query = input.value.trim();
+  if (!query) {
+    setStatus('Digite um endereço ou coordenadas (lat,lng).');
+    return;
+  }
+
+  try {
+    setStatus('Buscando localização...');
+    const result = await searchAddress(query);
+    const latLng = [result.lat, result.lng];
+
+    map.setView(latLng, 16);
+    if (!searchMarker) {
+      searchMarker = L.marker(latLng).addTo(map);
+    } else {
+      searchMarker.setLatLng(latLng);
+    }
+    searchMarker.bindPopup(result.label).openPopup();
+    setStatus(`Local encontrado: ${result.label}`);
+  } catch (error) {
+    setStatus(`Falha na busca: ${error.message}`);
+  }
+}
+
+document.getElementById('btn-search').addEventListener('click', runSearch);
+document.getElementById('search-input').addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') runSearch();
 });
 
 document.getElementById('btn-export-gpx').addEventListener('click', () => exportToGpx(state));

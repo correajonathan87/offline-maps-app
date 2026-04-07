@@ -5,6 +5,7 @@ const APP_SHELL = [
   './src/main.js',
   './src/map/mapRenderer.js',
   './src/map/offlineTileLayer.js',
+  './src/map/searchService.js',
   './src/gps/locationService.js',
   './src/editor/mapEditor.js',
   './src/persistence/storage.js',

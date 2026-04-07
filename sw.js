@@ -8,7 +8,6 @@ const APP_SHELL = [
   './src/gps/locationService.js',
   './src/editor/mapEditor.js',
   './src/persistence/storage.js',
-  './src/persistence/syncFolder.js',
   './src/io/fileInterop.js'
 ];
 

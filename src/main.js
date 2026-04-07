@@ -3,7 +3,6 @@ import { downloadVisibleRegion } from './map/offlineTileLayer.js';
 import { startGpsTracking } from './gps/locationService.js';
 import { setupMapEditor } from './editor/mapEditor.js';
 import { loadState, saveState } from './persistence/storage.js';
-import { createSyncFolderService } from './persistence/syncFolder.js';
 import { exportToGpx, exportToKml, importGpxOrKml } from './io/fileInterop.js';
 
 const state = loadState();
@@ -11,7 +10,6 @@ const statusEl = document.querySelector('#status');
 const setStatus = (msg) => (statusEl.textContent = msg);
 
 const { map, poiLayer, routeLayer } = initMap(setStatus);
-const syncService = createSyncFolderService(setStatus);
 
 function refresh() {
   renderPois(poiLayer, state.pois);
@@ -20,14 +18,6 @@ function refresh() {
 
 function persist() {
   saveState(state);
-}
-
-function replaceState(nextState) {
-  state.pois = nextState.pois || [];
-  state.routes = nextState.routes || [];
-  state.mapEdits = nextState.mapEdits || [];
-  persist();
-  refresh();
 }
 
 refresh();
@@ -54,21 +44,6 @@ document.getElementById('btn-finish-route').addEventListener('click', () => edit
 
 document.getElementById('btn-locate').addEventListener('click', () => {
   gps.centerOnUser();
-});
-
-document.getElementById('btn-sync-folder').addEventListener('click', async () => {
-  await syncService.chooseFolder();
-});
-
-document.getElementById('btn-sync-save').addEventListener('click', async () => {
-  await syncService.saveSnapshot(state);
-});
-
-document.getElementById('btn-sync-load').addEventListener('click', async () => {
-  const snapshot = await syncService.loadSnapshot();
-  if (!snapshot) return;
-  replaceState(snapshot);
-  setStatus('Dados sincronizados a partir da pasta compartilhada.');
 });
 
 document.getElementById('btn-download').addEventListener('click', async () => {
